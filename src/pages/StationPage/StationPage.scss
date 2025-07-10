@@ -1,0 +1,51 @@
+.taiwan-station {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .filter-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 12px;
+
+    .filter-option {
+      padding: 6px 12px;
+      border: 1px solid #ccc;
+      border-radius: 16px;
+      cursor: pointer;
+      user-select: none;
+      background-color: #f4f4f4;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+
+      &.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+    }
+  }
+
+  .btn--random {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-family: "ShanHaiFont";
+    font-size: 4rem;
+  }
+
+  .result {
+    .google-map {
+      border: none;
+      width: 100%;
+      height: 300px;
+    }
+  }
+}
