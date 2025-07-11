@@ -9,6 +9,7 @@
   src: url("/fonts/NotoSerifTC-VariableFont_wght.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
+  font-display: block;
 }
 
 
