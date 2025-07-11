@@ -29,7 +29,7 @@ const StationPage = () => {
   }
 
   useEffect(() => {
-    fetch('/stations.json')
+    fetch('../../../public/stations.json')
       .then((res) => res.json())
       .then((data) => {
         setStations(data)
