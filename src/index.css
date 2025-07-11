@@ -4,3 +4,12 @@
   font-weight: normal;
   font-style: normal;
 }
+
+body {
+  font-family: "noto-sans-tc", sans-serif;
+  background-color: #efefef;
+}
+
+* {
+  box-sizing: border-box !important;
+}

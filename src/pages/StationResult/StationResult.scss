@@ -1,0 +1,206 @@
+@mixin neumorphic-strong {
+  background: #efefef;
+  border: none;
+  border-radius: 0.5rem;
+  color: #444;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2rem;
+  text-align: center;
+  outline: none;
+  cursor: pointer;
+  transition: 0.2s ease-in-out;
+
+  box-shadow: 
+    -10px -10px 20px rgba(255, 255, 255, 0.9),
+    -10px -10px 15px rgba(255, 255, 255, 0.7),
+    10px 10px 12px rgba(255, 255, 255, 0.02),
+    10px 10px 18px rgba(0, 0, 0, 0.25),
+    6px 6px 8px rgba(0, 0, 0, 0.12),
+    3px 3px 4px rgba(0, 0, 0, 0.08);
+
+  &:hover {
+    transform: translateY(-1px); 
+    box-shadow: -6px -6px 12px rgba(255, 255, 255, 0.8),
+      -6px -6px 8px rgba(255, 255, 255, 0.6),
+      6px 6px 6px rgba(255, 255, 255, 0.02), 6px 6px 12px rgba(0, 0, 0, 0.18),
+      3px 3px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  &.active,
+  &:focus {
+    transform: translateY(1px); 
+    box-shadow: inset -6px -6px 12px rgba(255, 255, 255, 0.9),
+      inset -6px -6px 8px rgba(255, 255, 255, 0.7),
+      inset 6px 6px 6px rgba(255, 255, 255, 0.02),
+      inset 6px 6px 12px rgba(0, 0, 0, 0.25),
+      inset 3px 3px 6px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.result {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  max-width: 300px;
+  margin: 2rem auto;
+
+  .btn--back {
+    @include neumorphic-strong;
+    padding: 1rem;
+    font-family: "ShanHaiFont";
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+  }
+
+  .google-map {
+    border: none;
+    width: 100%;
+    height: 300px;
+
+    box-shadow: 
+    -10px -10px 20px rgba(255, 255, 255, 0.9),
+    -10px -10px 15px rgba(255, 255, 255, 0.7),
+    10px 10px 12px rgba(255, 255, 255, 0.02),
+    10px 10px 18px rgba(0, 0, 0, 0.25),
+    6px 6px 8px rgba(0, 0, 0, 0.12),
+    3px 3px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .train-ticket {
+    width: 300px;
+    // height: 450px;
+    position: relative;
+    padding: 1rem;
+    overflow: hidden;
+    margin: 2rem auto;
+
+    box-shadow: 
+    -10px -10px 20px rgba(255, 255, 255, 0.9),
+    -10px -10px 15px rgba(255, 255, 255, 0.7),
+    10px 10px 12px rgba(255, 255, 255, 0.02),
+    10px 10px 18px rgba(0, 0, 0, 0.25),
+    6px 6px 8px rgba(0, 0, 0, 0.12),
+    3px 3px 4px rgba(0, 0, 0, 0.08);
+
+    .train-info {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding-top: 0.5rem;
+
+      &__left {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .date {
+          font-weight: 600;
+          font-size: 1.2rem;
+        }
+
+        .category {
+          font-weight: 600;
+          font-size: 1.2rem;
+        }
+      }
+      &__right {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        .train-num {
+          font-weight: 600;
+          font-size: 1.2rem;
+          letter-spacing: 0.02rem;
+        }
+
+        .train-category {
+          font-weight: 600;
+          font-size: 1.1rem;
+          text-align: right;
+        }
+      }
+    }
+
+    .default-word {
+      width: 100%;
+      margin: 0;
+      font-weight: 600;
+      font-size: 1rem;
+      text-align: right;
+      line-height: 0.95;
+      letter-spacing: -0.01rem;
+
+      &.top-mark {
+        text-align: center;
+        font-size: 1.2rem;
+      }
+
+      &.cost {
+        text-align: right;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+      }
+
+      &.code {
+        font-size: 1.32rem;
+      }
+    }
+
+    .ticket-bg {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .departure-city {
+      all: unset;
+      font-size: 2rem;
+      font-weight: bold;
+      height: 100px;
+      width: 100%;
+
+      display: flex;
+      align-items: center;
+      padding-left: 2rem;
+      margin: 0;
+      border-radius: 0;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .mark-heading {
+      font-size: 2rem;
+      padding: 1rem;
+      padding-left: 3rem;
+    }
+
+    .arrival-city {
+      all: unset;
+      display: block;
+      font-size: 2rem;
+      font-weight: bold;
+      height: 100px;
+
+      display: flex;
+      align-items: center;
+      padding-left: 2rem;
+    }
+  }
+}

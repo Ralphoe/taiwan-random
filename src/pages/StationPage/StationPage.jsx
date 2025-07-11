@@ -1,13 +1,16 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./StationPage.scss";
 
 const StationPage = () => {
   const [stations, setStations] = useState([]);
   const [filteredStations, setFilteredStations] = useState([]);
-  const [selectedStation, setSelectedStation] = useState(null);
-
   const [selectedRegions, setSelectedRegions] = useState([]);
   const [selectedLevels, setSelectedLevels] = useState([]);
+  const [isEditingCity, setIsEditingCity] = useState(false);
+  const [cityName, setCityName] = useState("臺北");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("/stations.json")
@@ -31,63 +34,21 @@ const StationPage = () => {
     });
 
     setFilteredStations(result);
-    setSelectedStation(null);
   }, [selectedRegions, selectedLevels, stations]);
 
-  //   隨機抽選
   const handlePickRandomStation = () => {
     if (filteredStations.length === 0) return;
     const random = Math.floor(Math.random() * filteredStations.length);
-    setSelectedStation(filteredStations[random]);
+    const picked = filteredStations[random];
+    navigate("/result", { state: { station: picked, cityName } });
   };
 
   return (
     <div className="taiwan-station">
-      <h1>電車吃漢</h1>
-
-      {/* <h3>選擇地區:</h3>
-      {["北部", "中部", "南部", "東部", "其他"].map((r) => (
-        <label key={r}>
-          <input
-            type="checkbox"
-            value={r}
-            checked={selectedRegions.includes(r)}
-            onChange={(e) => {
-              const value = e.target.value;
-              setSelectedRegions((prev) =>
-                prev.includes(value)
-                  ? prev.filter((v) => v !== value)
-                  : [...prev, value]
-              );
-            }}
-          />
-          {r}
-        </label>
-      ))}
-
-      <h3>選擇站等:</h3>
-      {["特等站", "一等站", "二等站", "其他"].map((l) => (
-        <label key={l}>
-          <input
-            type="checkbox"
-            value={l}
-            checked={selectedLevels.includes(l)}
-            onChange={(e) => {
-              const value = e.target.value;
-              setSelectedLevels((prev) =>
-                prev.includes(value)
-                  ? prev.filter((v) => v !== value)
-                  : [...prev, value]
-              );
-            }}
-          />
-          {l}
-        </label>
-      ))} */}
-
-      <h3>選擇地區:</h3>
+      <h1 className="station-title">電車痴漢</h1>
+      <h3 className="filter-title">選擇地區:</h3>
       <div className="filter-group">
-        {["北部", "中部", "南部", "東部", "其他"].map((r) => (
+        {["北部", "中部", "南部", "東部"].map((r) => (
           <div
             key={r}
             className={`filter-option ${
@@ -104,9 +65,9 @@ const StationPage = () => {
         ))}
       </div>
 
-      <h3>選擇站等:</h3>
+      <h3 className="filter-title">選擇站等:</h3>
       <div className="filter-group">
-        {["特等站", "一等站", "二等站", "其他"].map((l) => (
+        {["特等", "一等", "二等", "其他"].map((l) => (
           <div
             key={l}
             className={`filter-option ${
@@ -123,26 +84,28 @@ const StationPage = () => {
         ))}
       </div>
 
+      {/* <h3>出發地:</h3>
+      {isEditingCity ? (
+        <input
+          type="text"
+          className="departure-city"
+          value={cityName}
+          autoFocus
+          onChange={(e) => setCityName(e.target.value)}
+          onBlur={() => setIsEditingCity(false)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") setIsEditingCity(false);
+          }}
+        />
+      ) : (
+        <h2 className="departure-city" onClick={() => setIsEditingCity(true)}>
+          {cityName}
+        </h2>
+      )} */}
+
       <button className="btn--random" onClick={handlePickRandomStation}>
-        出發!
+        GO!
       </button>
-
-      {selectedStation && (
-        <div className="result">
-          <h2>{selectedStation.Name}</h2>
-          <p>📍 {selectedStation.Address}</p>
-          <p>📞 {selectedStation.Phone}</p>
-          <p>🗺️ {selectedStation.Region}</p>
-
-          <iframe
-            className="google-map"
-            title="Google Map"
-            src={`https://maps.google.com/maps?q=${selectedStation.Lat},${selectedStation.Lon}&z=16&output=embed`}
-            allowFullScreen
-            frameborder="0"
-          ></iframe>
-        </div>
-      )}
     </div>
   );
 };
