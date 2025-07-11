@@ -13,6 +13,8 @@ const StationPage = () => {
 
   const navigate = useNavigate()
 
+  const [isLoading, setIsLoading] = useState(true)
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -58,73 +60,100 @@ const StationPage = () => {
     navigate('/result', { state: { station: picked, cityName } })
   }
 
+  useEffect(() => {
+    const img = new Image()
+    img.src = './images/train/ticket.png'
+
+    const fontReady = document.fonts?.ready || Promise.resolve()
+
+    img.onload = () => {
+      fontReady.then(() => {
+        setTimeout(() => {
+          setIsLoading(false)
+        }, 300)
+      })
+    }
+  }, [])
+
   return (
-    <motion.div
-      className="taiwan-station"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-    >
-      <motion.h1 className="station-title" variants={itemVariants}>
-        電車
-        <span className="emphasized-word">
-          口<span className="huge-title">乞</span>
-        </span>
-        漢
-      </motion.h1>
+    <>
+      {isLoading ? (
+        <div className="loading-screen">
+          <div className="loading-spinner" />
+        </div>
+      ) : (
+        <motion.div
+          className="taiwan-station"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.h1 className="station-title" variants={itemVariants}>
+            電車
+            <span className="emphasized-word">
+              口<span className="huge-title">乞</span>
+            </span>
+            漢
+          </motion.h1>
 
-      <motion.h3 className="filter-title" variants={itemVariants}>
-        選擇地區:
-      </motion.h3>
-      <motion.div className="filter-group" variants={itemVariants}>
-        {['北部', '中部', '南部', '東部'].map((r) => (
-          <motion.div
-            key={r}
-            className={`filter-option ${
-              selectedRegions.includes(r) ? 'active' : ''
-            }`}
-            onClick={() => {
-              setSelectedRegions((prev) =>
-                prev.includes(r) ? prev.filter((v) => v !== r) : [...prev, r]
-              )
-            }}
+          <motion.h3 className="filter-title" variants={itemVariants}>
+            選擇地區:
+          </motion.h3>
+          <motion.div className="filter-group" variants={itemVariants}>
+            {['北部', '中部', '南部', '東部'].map((r) => (
+              <motion.div
+                key={r}
+                className={`filter-option ${
+                  selectedRegions.includes(r) ? 'active' : ''
+                }`}
+                onClick={() => {
+                  setSelectedRegions((prev) =>
+                    prev.includes(r)
+                      ? prev.filter((v) => v !== r)
+                      : [...prev, r]
+                  )
+                }}
+                variants={itemVariants}
+              >
+                {r}
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.h3 className="filter-title" variants={itemVariants}>
+            選擇站等:
+          </motion.h3>
+          <motion.div className="filter-group" variants={itemVariants}>
+            {['特等', '一等', '二等', '其他'].map((l) => (
+              <motion.div
+                key={l}
+                className={`filter-option ${
+                  selectedLevels.includes(l) ? 'active' : ''
+                }`}
+                onClick={() => {
+                  setSelectedLevels((prev) =>
+                    prev.includes(l)
+                      ? prev.filter((v) => v !== l)
+                      : [...prev, l]
+                  )
+                }}
+                variants={itemVariants}
+              >
+                {l}
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <motion.button
+            className="btn--random"
+            onClick={handlePickRandomStation}
             variants={itemVariants}
           >
-            {r}
-          </motion.div>
-        ))}
-      </motion.div>
-
-      <motion.h3 className="filter-title" variants={itemVariants}>
-        選擇站等:
-      </motion.h3>
-      <motion.div className="filter-group" variants={itemVariants}>
-        {['特等', '一等', '二等', '其他'].map((l) => (
-          <motion.div
-            key={l}
-            className={`filter-option ${
-              selectedLevels.includes(l) ? 'active' : ''
-            }`}
-            onClick={() => {
-              setSelectedLevels((prev) =>
-                prev.includes(l) ? prev.filter((v) => v !== l) : [...prev, l]
-              )
-            }}
-            variants={itemVariants}
-          >
-            {l}
-          </motion.div>
-        ))}
-      </motion.div>
-
-      <motion.button
-        className="btn--random"
-        onClick={handlePickRandomStation}
-        variants={itemVariants}
-      >
-        GO!
-      </motion.button>
-    </motion.div>
+            GO!
+          </motion.button>
+        </motion.div>
+      )}
+    </>
   )
 }
 
