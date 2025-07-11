@@ -24,6 +24,8 @@ const StationResult = () => {
   const [revealed, setRevealed] = useState(false)
   const [rollingName, setRollingName] = useState('')
 
+  const [mapLoaded, setMapLoaded] = useState(false)
+
   const getRandomText = () => {
     const pool = '台中高雄新竹台北花蓮嘉義台南彰化苗栗雲林南港七堵樹林左營'
     const char1 = pool[Math.floor(Math.random() * pool.length)]
@@ -84,6 +86,15 @@ const StationResult = () => {
       {isLoading ? (
         <div className="loading-screen">
           <div className="loading-spinner" />
+          <div
+            style={{
+              fontFamily: 'NotoSerifTC',
+              opacity: 0,
+              position: 'absolute',
+            }}
+          >
+            字體載入測試
+          </div>
         </div>
       ) : (
         <motion.div
@@ -175,16 +186,22 @@ const StationResult = () => {
           </motion.div>
 
           {revealed && (
-            <motion.iframe
-              className="google-map"
-              title="Google Map"
-              src={`https://maps.google.com/maps?q=${station.Lat},${station.Lon}&z=16&output=embed`}
-              allowFullScreen
-              frameBorder="0"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
-            />
+            <div className="map-container">
+              {!mapLoaded && <div className="map-skeleton" />}
+              <motion.iframe
+                className="google-map"
+                title="Google Map"
+                src={`https://maps.google.com/maps?q=${station.Lat},${station.Lon}&z=16&output=embed`}
+                allowFullScreen
+                frameBorder="0"
+                loading="lazy"
+                onLoad={() => setMapLoaded(true)}
+                initial={{ opacity: 0, y: 20 }}
+                animate={mapLoaded ? { opacity: 1, y: 0 } : { opacity: 0 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}
+                style={{ position: mapLoaded ? 'relative' : 'absolute' }}
+              />
+            </div>
           )}
 
           <motion.button

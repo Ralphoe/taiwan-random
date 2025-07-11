@@ -80,6 +80,15 @@ const StationPage = () => {
       {isLoading ? (
         <div className="loading-screen">
           <div className="loading-spinner" />
+          <div
+            style={{
+              fontFamily: 'NotoSerifTC',
+              opacity: 0,
+              position: 'absolute',
+            }}
+          >
+            字體載入測試
+          </div>
         </div>
       ) : (
         <motion.div
