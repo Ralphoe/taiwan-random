@@ -67,20 +67,34 @@ const StationResult = () => {
   }, [])
 
   useEffect(() => {
+    if (!station) {
+      navigate('/')
+    }
+  }, [station, navigate])
+
+  useEffect(() => {
     const img = new Image()
     img.src = './images/train/ticket.png'
 
-    img.onload = () => {
-      requestAnimationFrame(() => {
-        const fontReady = document.fonts?.ready || Promise.resolve()
+    const loadImg = new Promise((resolve) => (img.onload = resolve))
 
-        fontReady.then(() => {
-          setTimeout(() => {
-            setIsLoading(false)
-          }, 300)
-        })
-      })
+    const waitForFonts = async () => {
+      const dummy = document.createElement('span')
+      dummy.innerText = '測試'
+      dummy.style.fontFamily = 'NotoSerifTC'
+      dummy.style.opacity = '0'
+      dummy.style.position = 'absolute'
+      document.body.appendChild(dummy)
+
+      await document.fonts.ready
+      dummy.remove()
     }
+
+    Promise.all([loadImg, waitForFonts()]).then(() => {
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 300)
+    })
   }, [])
 
   return (
