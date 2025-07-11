@@ -69,7 +69,7 @@ const StationPage = () => {
     const waitForFonts = async () => {
       const notoFont = new FontFace(
         'NotoSerifTC',
-        'url(/fonts/NotoSerifTC-VariableFont_wght.ttf)',
+        'url(./fonts/NotoSerifTC-VariableFont_wght.ttf)',
         { style: 'normal', weight: '400' }
       )
       await notoFont.load()
