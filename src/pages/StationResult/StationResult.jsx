@@ -74,7 +74,7 @@ const StationResult = () => {
           臺灣鐵路局
         </motion.p>
         <motion.span className="ticket-bg" variants={itemVariants}>
-          <img src="/images/train/ticket.png" alt="" />
+          <img src="./images/train/ticket.png" alt="ticket image" />
         </motion.span>
 
         <motion.div className="train-info" variants={itemVariants}>
