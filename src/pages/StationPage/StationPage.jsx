@@ -67,15 +67,13 @@ const StationPage = () => {
     const loadImg = new Promise((resolve) => (img.onload = resolve))
 
     const waitForFonts = async () => {
-      const dummy = document.createElement('span')
-      dummy.innerText = '測試'
-      dummy.style.fontFamily = 'NotoSerifTC'
-      dummy.style.opacity = '0'
-      dummy.style.position = 'absolute'
-      document.body.appendChild(dummy)
-
-      await document.fonts.ready
-      dummy.remove()
+      const notoFont = new FontFace(
+        'NotoSerifTC',
+        'url(/fonts/NotoSerifTC-VariableFont_wght.ttf)',
+        { style: 'normal', weight: '400' }
+      )
+      await notoFont.load()
+      document.fonts.add(notoFont)
     }
 
     Promise.all([loadImg, waitForFonts()]).then(() => {
