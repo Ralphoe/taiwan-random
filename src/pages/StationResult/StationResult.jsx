@@ -1,56 +1,54 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-import FixedBarcode from "../../component/FixedBarcode/FixedBarcode";
-import "./StationResult.scss";
+import { useLocation, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import FixedBarcode from '../../component/FixedBarcode/FixedBarcode'
+import './StationResult.scss'
 
 const StationResult = () => {
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const station = state?.station;
-  const cityName = state?.cityName || "台北";
+  const navigate = useNavigate()
+  const { state } = useLocation()
+  const station = state?.station
+  const cityName = state?.cityName || '台北'
 
-  const date = new Date();
+  const date = new Date()
   const formattedDate = `${date.getFullYear()}.${String(
     date.getMonth() + 1
-  ).padStart(2, "0")}.${String(date.getDate()).padStart(2, "0")}`;
-  const time = `${String(date.getHours()).padStart(2, "0")}:${String(
+  ).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`
+  const time = `${String(date.getHours()).padStart(2, '0')}:${String(
     date.getMinutes()
-  ).padStart(2, "0")}`;
+  ).padStart(2, '0')}`
 
-  const [isEditingCity, setIsEditingCity] = useState(false);
-  const [editableCityName, setEditableCityName] = useState(cityName);
+  const [isEditingCity, setIsEditingCity] = useState(false)
+  const [editableCityName, setEditableCityName] = useState(cityName)
 
-  const [revealed, setRevealed] = useState(false);
-  const [rollingName, setRollingName] = useState("");
+  const [revealed, setRevealed] = useState(false)
+  const [rollingName, setRollingName] = useState('')
 
   const getRandomText = () => {
-    const pool = "台中高雄新竹台北花蓮嘉義台南彰化苗栗雲林南港七堵樹林左營";
-    const char1 = pool[Math.floor(Math.random() * pool.length)];
-    const char2 = pool[Math.floor(Math.random() * pool.length)];
-    return char1 + char2;
-  };
+    const pool = '台中高雄新竹台北花蓮嘉義台南彰化苗栗雲林南港七堵樹林左營'
+    const char1 = pool[Math.floor(Math.random() * pool.length)]
+    const char2 = pool[Math.floor(Math.random() * pool.length)]
+    return char1 + char2
+  }
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRollingName(getRandomText());
-    }, 50);
+      setRollingName(getRandomText())
+    }, 50)
 
     const timeout = setTimeout(() => {
-      clearInterval(interval);
-      setRevealed(true);
-    }, 3000); // 3秒後揭曉真實車站名稱
+      clearInterval(interval)
+      setRevealed(true)
+    }, 3000) // 3秒後揭曉真實車站名稱
 
     return () => {
-      clearInterval(interval);
-      clearTimeout(timeout);
-    };
-  }, []);
+      clearInterval(interval)
+      clearTimeout(timeout)
+    }
+  }, [])
 
   return (
     <div className="result">
-      <button onClick={() => navigate(-1)} className="btn--back">BACK</button>
-
       <div className="train-ticket">
         <p className="top-mark default-word">臺灣鐵路局</p>
         <span className="ticket-bg">
@@ -75,19 +73,19 @@ const StationResult = () => {
             maxLength={5}
             onChange={(e) => setEditableCityName(e.target.value)}
             onBlur={(e) => {
-              const value = e.target.value.trim();
-              if (value === "") {
-                setEditableCityName("臺北");
+              const value = e.target.value.trim()
+              if (value === '') {
+                setEditableCityName('臺北')
               } else {
-                setEditableCityName(value);
+                setEditableCityName(value)
               }
-              setIsEditingCity(false);
+              setIsEditingCity(false)
             }}
             onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                setIsEditingCity(false);
-                if (editableCityName.trim() === "") {
-                  setEditableCityName("臺北");
+              if (e.key === 'Enter') {
+                setIsEditingCity(false)
+                if (editableCityName.trim() === '') {
+                  setEditableCityName('臺北')
                 }
               }
             }}
@@ -120,11 +118,14 @@ const StationResult = () => {
           frameBorder="0"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
         />
       )}
+      <button onClick={() => navigate(-1)} className="btn--back">
+        BACK
+      </button>
     </div>
-  );
-};
+  )
+}
 
-export default StationResult;
+export default StationResult

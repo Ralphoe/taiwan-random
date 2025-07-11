@@ -4,6 +4,13 @@
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "NotoSerifTC";
+  src: url("/fonts/NotoSerifTC-VariableFont_wght.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 body {
   font-family: "noto-sans-tc", sans-serif;
