@@ -77,12 +77,13 @@
   width: 100%;
 
   max-width: 300px;
-  margin: 2rem auto;
+  margin: 0 auto;
 
   .station-title {
     font-family: 'ShanHaiFont';
     font-weight: 600;
     font-size: 3rem;
+    width: 100%;
     color: #444;
 
     display: flex;

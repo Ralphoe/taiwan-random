@@ -31,6 +31,21 @@ const StationResult = () => {
     return char1 + char2
   }
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 5 },
+    visible: { opacity: 1, y: 0 },
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
       setRollingName(getRandomText())
@@ -48,24 +63,33 @@ const StationResult = () => {
   }, [])
 
   return (
-    <div className="result">
-      <div className="train-ticket">
-        <p className="top-mark default-word">臺灣鐵路局</p>
-        <span className="ticket-bg">
+    <motion.div
+      className="result"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.div className="train-ticket" variants={itemVariants}>
+        <motion.p className="top-mark default-word" variants={itemVariants}>
+          臺灣鐵路局
+        </motion.p>
+        <motion.span className="ticket-bg" variants={itemVariants}>
           <img src="/images/train/ticket.png" alt="" />
-        </span>
-        <div className="train-info">
-          <div className="train-info__left">
+        </motion.span>
+
+        <motion.div className="train-info" variants={itemVariants}>
+          <motion.div className="train-info__left" variants={itemVariants}>
             <div className="date">{formattedDate}</div>
             <div className="category">全票</div>
-          </div>
-          <div className="train-info__right">
+          </motion.div>
+          <motion.div className="train-info__right" variants={itemVariants}>
             <div className="train-num">1069次</div>
             <div className="train-category">新自強</div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
+
         {isEditingCity ? (
-          <input
+          <motion.input
             type="text"
             className="departure-city"
             value={editableCityName}
@@ -89,25 +113,43 @@ const StationResult = () => {
                 }
               }
             }}
+            variants={itemVariants}
           />
         ) : (
-          <h2 className="departure-city" onClick={() => setIsEditingCity(true)}>
+          <motion.h2
+            className="departure-city"
+            onClick={() => setIsEditingCity(true)}
+            variants={itemVariants}
+          >
             {editableCityName}
-          </h2>
+          </motion.h2>
         )}
-        <span className="mark-heading">▼</span>
-        <h2 className="arrival-city">
+
+        <motion.span className="mark-heading" variants={itemVariants}>
+          ▼
+        </motion.span>
+        <motion.h2 className="arrival-city" variants={itemVariants}>
           {revealed ? station.Name : rollingName}
-        </h2>
-        <p className="cost default-word">NT＄1,069</p>
-        <p className="default-word">限當日當次車有效</p>
-        <p className="default-word">{`定刷{1069}會換{*1069}異`}</p>
-        <p className="default-word code">M10691069106966</p>
-        <p className="default-word">1069-1069-1069 {time}</p>
-        <p className="default-word barcode">
+        </motion.h2>
+        <motion.p className="cost default-word" variants={itemVariants}>
+          NT＄1,069
+        </motion.p>
+        <motion.p className="default-word" variants={itemVariants}>
+          限當日當次車有效
+        </motion.p>
+        <motion.p className="default-word" variants={itemVariants}>
+          {`定刷{1069}會換{*1069}異`}
+        </motion.p>
+        <motion.p className="default-word code" variants={itemVariants}>
+          M10691069106966
+        </motion.p>
+        <motion.p className="default-word" variants={itemVariants}>
+          1069-1069-1069 {time}
+        </motion.p>
+        <motion.p className="default-word barcode" variants={itemVariants}>
           <FixedBarcode value="A1B2C3D4E5F6" />
-        </p>
-      </div>
+        </motion.p>
+      </motion.div>
 
       {revealed && (
         <motion.iframe
@@ -121,10 +163,15 @@ const StationResult = () => {
           transition={{ duration: 0.6, ease: 'easeOut' }}
         />
       )}
-      <button onClick={() => navigate(-1)} className="btn--back">
+
+      <motion.button
+        onClick={() => navigate(-1)}
+        className="btn--back"
+        variants={itemVariants}
+      >
         BACK
-      </button>
-    </div>
+      </motion.button>
+    </motion.div>
   )
 }
 

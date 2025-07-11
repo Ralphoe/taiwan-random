@@ -49,7 +49,6 @@
   .btn--back {
     @include neumorphic-strong;
     padding: 1rem;
-    margin-top: 2rem;
     font-family: 'ShanHaiFont';
     font-size: 1.5rem;
     font-weight: bold;
@@ -72,6 +71,7 @@
     border: none;
     width: 100%;
     height: 300px;
+    margin-bottom: 2rem;
 
     box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.9),
       -10px -10px 15px rgba(255, 255, 255, 0.7),
@@ -86,7 +86,8 @@
     position: relative;
     padding: 1rem;
     overflow: hidden;
-    margin: 2rem auto;
+    margin: 0 auto;
+    margin-bottom: 2rem;
 
     box-shadow: -10px -10px 20px rgba(255, 255, 255, 0.9),
       -10px -10px 15px rgba(255, 255, 255, 0.7),

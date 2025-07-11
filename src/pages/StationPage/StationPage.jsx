@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 import './StationPage.scss'
 
 const StationPage = () => {
@@ -11,6 +12,21 @@ const StationPage = () => {
   const [cityName, setCityName] = useState('臺北')
 
   const navigate = useNavigate()
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.05,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 5 },
+    visible: { opacity: 1, y: 0 },
+  }
 
   useEffect(() => {
     fetch('/stations.json')
@@ -43,18 +59,26 @@ const StationPage = () => {
   }
 
   return (
-    <div className="taiwan-station">
-      <h1 className="station-title">
+    <motion.div
+      className="taiwan-station"
+      variants={containerVariants}
+      initial="hidden"
+      animate="visible"
+    >
+      <motion.h1 className="station-title" variants={itemVariants}>
         電車
         <span className="emphasized-word">
           口<span className="huge-title">乞</span>
         </span>
         漢
-      </h1>
-      <h3 className="filter-title">選擇地區:</h3>
-      <div className="filter-group">
+      </motion.h1>
+
+      <motion.h3 className="filter-title" variants={itemVariants}>
+        選擇地區:
+      </motion.h3>
+      <motion.div className="filter-group" variants={itemVariants}>
         {['北部', '中部', '南部', '東部'].map((r) => (
-          <div
+          <motion.div
             key={r}
             className={`filter-option ${
               selectedRegions.includes(r) ? 'active' : ''
@@ -64,16 +88,19 @@ const StationPage = () => {
                 prev.includes(r) ? prev.filter((v) => v !== r) : [...prev, r]
               )
             }}
+            variants={itemVariants}
           >
             {r}
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      <h3 className="filter-title">選擇站等:</h3>
-      <div className="filter-group">
+      <motion.h3 className="filter-title" variants={itemVariants}>
+        選擇站等:
+      </motion.h3>
+      <motion.div className="filter-group" variants={itemVariants}>
         {['特等', '一等', '二等', '其他'].map((l) => (
-          <div
+          <motion.div
             key={l}
             className={`filter-option ${
               selectedLevels.includes(l) ? 'active' : ''
@@ -83,35 +110,21 @@ const StationPage = () => {
                 prev.includes(l) ? prev.filter((v) => v !== l) : [...prev, l]
               )
             }}
+            variants={itemVariants}
           >
             {l}
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      {/* <h3>出發地:</h3>
-      {isEditingCity ? (
-        <input
-          type="text"
-          className="departure-city"
-          value={cityName}
-          autoFocus
-          onChange={(e) => setCityName(e.target.value)}
-          onBlur={() => setIsEditingCity(false)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") setIsEditingCity(false);
-          }}
-        />
-      ) : (
-        <h2 className="departure-city" onClick={() => setIsEditingCity(true)}>
-          {cityName}
-        </h2>
-      )} */}
-
-      <button className="btn--random" onClick={handlePickRandomStation}>
+      <motion.button
+        className="btn--random"
+        onClick={handlePickRandomStation}
+        variants={itemVariants}
+      >
         GO!
-      </button>
-    </div>
+      </motion.button>
+    </motion.div>
   )
 }
 
