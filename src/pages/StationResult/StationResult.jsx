@@ -70,13 +70,15 @@ const StationResult = () => {
     const img = new Image()
     img.src = './images/train/ticket.png'
 
-    const fontReady = document.fonts?.ready || Promise.resolve()
-
     img.onload = () => {
-      fontReady.then(() => {
-        setTimeout(() => {
-          setIsLoading(false)
-        }, 300)
+      requestAnimationFrame(() => {
+        const fontReady = document.fonts?.ready || Promise.resolve()
+
+        fontReady.then(() => {
+          setTimeout(() => {
+            setIsLoading(false)
+          }, 300)
+        })
       })
     }
   }, [])
